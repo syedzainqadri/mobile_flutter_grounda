@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "694017786252",
+    "project_id": "mobilegrounda",
+    "storage_bucket": "mobilegrounda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694017786252:android:ab9f6f6642b640c7ead6a9",
+        "android_client_info": {
+          "package_name": "com.mobile_grounda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694017786252-m6kk1j8uamb3r2jmpo1gpcg2c0of7e2m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobile_grounda",
+            "certificate_hash": "a5d356d86c3889bd9142e3bea69e16fc4c28abce"
+          }
+        },
+        {
+          "client_id": "694017786252-afahkmp8a18refj5vequtokhihiv77pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxTPyru8q_1h6u7mfN1huaHFnDjwc1YSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694017786252-afahkmp8a18refj5vequtokhihiv77pt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "694017786252-tu947u752v02mko3db8k2u41utkosb81.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mobileFlutterGrounda"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

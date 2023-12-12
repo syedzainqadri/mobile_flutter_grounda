@@ -44,41 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA0EfjB9QFaTGAgtJdjEx9Wj8UKWZevU7s',
-    appId: '1:349828504920:web:30aa24e6f27cbd680e992d',
-    messagingSenderId: '349828504920',
-    projectId: 'ground-admin-22692',
-    authDomain: 'ground-admin-22692.firebaseapp.com',
-    storageBucket: 'ground-admin-22692.appspot.com',
+    apiKey: 'AIzaSyD-hSc-CsyVnMgm3kcLVwj0ZSm6lCxHDoE',
+    appId: '1:694017786252:web:ff1ca960e1aeb694ead6a9',
+    messagingSenderId: '694017786252',
+    projectId: 'mobilegrounda',
+    authDomain: 'mobilegrounda.firebaseapp.com',
+    storageBucket: 'mobilegrounda.appspot.com',
+    measurementId: 'G-YXH7MFZZZX',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDNPpNbO5NtlNer8don2owixbrYHhNWd78',
-    appId: '1:349828504920:android:135cad359a0425650e992d',
-    messagingSenderId: '349828504920',
-    projectId: 'ground-admin-22692',
-    storageBucket: 'ground-admin-22692.appspot.com',
+    apiKey: 'AIzaSyDxTPyru8q_1h6u7mfN1huaHFnDjwc1YSI',
+    appId: '1:694017786252:android:ab9f6f6642b640c7ead6a9',
+    messagingSenderId: '694017786252',
+    projectId: 'mobilegrounda',
+    storageBucket: 'mobilegrounda.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCpmA0Pba3jJPBg8izyWEbg3SAiwNBk8TY',
-    appId: '1:349828504920:ios:b1bbbb047214d51b0e992d',
-    messagingSenderId: '349828504920',
-    projectId: 'ground-admin-22692',
-    storageBucket: 'ground-admin-22692.appspot.com',
-    iosClientId:
-        '349828504920-dvi83ug13natk6pr8fubpikipvi672uu.apps.googleusercontent.com',
-    iosBundleId: 'com.example.frontendGrounda',
+    apiKey: 'AIzaSyDyqM1i20rHrXeFbWGykG9sJDriPvRKrTA',
+    appId: '1:694017786252:ios:c246bb89d0830bdfead6a9',
+    messagingSenderId: '694017786252',
+    projectId: 'mobilegrounda',
+    storageBucket: 'mobilegrounda.appspot.com',
+    iosBundleId: 'com.example.mobileFlutterGrounda',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCpmA0Pba3jJPBg8izyWEbg3SAiwNBk8TY',
-    appId: '1:349828504920:ios:b1bbbb047214d51b0e992d',
-    messagingSenderId: '349828504920',
-    projectId: 'ground-admin-22692',
-    storageBucket: 'ground-admin-22692.appspot.com',
-    iosClientId:
-        '349828504920-dvi83ug13natk6pr8fubpikipvi672uu.apps.googleusercontent.com',
-    iosBundleId: 'com.example.frontendGrounda',
+    apiKey: 'AIzaSyDyqM1i20rHrXeFbWGykG9sJDriPvRKrTA',
+    appId: '1:694017786252:ios:c246bb89d0830bdfead6a9',
+    messagingSenderId: '694017786252',
+    projectId: 'mobilegrounda',
+    storageBucket: 'mobilegrounda.appspot.com',
+    iosBundleId: 'com.example.mobileFlutterGrounda',
   );
 }

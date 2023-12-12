@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mobile_flutter_grounda">
+    package="com.mobile_grounda">
    <application
-        android:label="mobile_flutter_grounda"
+        android:label="Grounda"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

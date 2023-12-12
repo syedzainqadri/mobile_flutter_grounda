@@ -1,23 +1,39 @@
 import 'dart:convert';
 
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_flutter_grounda/app/models/userModel/user_model.dart';
+import 'package:mobile_flutter_grounda/app/widgets/common_text_widget.dart';
+import 'package:mobile_flutter_grounda/utils/constants.dart';
+import 'package:mobile_flutter_grounda/utils/global_methods.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
 class AuthController extends GetxController {
   late FocusNode userNameFocus;
   late FocusNode passwordFocus;
-  // FirebaseAuth auth = FirebaseAuth.instance;
-  // Rxn<User> firebaseUser = Rxn<User>();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  Rxn<User> firebaseUser = Rxn<User>();
 
-  // User? get userGetter => firebaseUser.value;
+  User? get userGetter => firebaseUser.value;
 
   var userModel = UserModel().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
+
+  var emailController = TextEditingController().obs;
+  var passwordController = TextEditingController().obs;
+  RxBool passwordVisible = true.obs;
+  var isLogin = false.obs;
+  var isRegistering = false.obs;
+
+  void togglePasswordVisibility() {
+    passwordVisible.value = !passwordVisible.value;
+  }
 
   @override
   void onInit() {
@@ -84,71 +100,101 @@ class AuthController extends GetxController {
   //   }
   // }
 
-  // // setting profile scope
-  // final GoogleSignIn _googleSignIn = GoogleSignIn(
-  //   scopes: [
-  //     'email',
-  //     'profile',
-  //   ],
-  // );
+  // setting profile scope
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'profile',
+    ],
+  );
 
-  // Future<void> googleSignin() async {
-  //   try {
-  //     GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-  //     GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-  //     AuthCredential authCredential = GoogleAuthProvider.credential(
-  //         idToken: googleAuth.idToken!, accessToken: googleAuth.accessToken!);
-  //     UserCredential authResult =
-  //         await auth.signInWithCredential(authCredential);
+  Future<bool> googleSignin() async {
+    try {
+      GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken!, accessToken: googleAuth.accessToken!);
+      UserCredential authResult =
+          await auth.signInWithCredential(authCredential);
 
-  //     if (authResult.additionalUserInfo!.isNewUser) {
-  //       auth.currentUser!.getIdToken().then((value) => {token.value = value});
-  //       // UserModel userModel =
-  //       // UserModel(fcmtoken: authResult.user!.getIdToken());
-  //     }
-  //   } catch (e) {
-  //     errorSnackbar(
-  //       'Login Failed ',
-  //       'Google login failed, try again.',
-  //     );
-  //   }
-  // }
+      if (googleAuth.accessToken != '') {
+        return true;
+      } else {
+        return false;
+      }
 
-  Future<bool> registerUser(String email, String password, String role) async {
-    var bodyPrepare = {
-      "email": email,
-      "password": password,
-      "role": role,
-    };
-    var response = await http.post(Uri.parse(baseUrl + createUser),
-        body: jsonEncode(bodyPrepare));
-
-    print(response.body);
-    if (response.statusCode == 200) {
-      userModel.value = userModelFromJson(response.body);
-    } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      // if (authResult.additionalUserInfo!.isNewUser) {
+      //   // auth.currentUser!.getIdToken().then((value) => {token.value = value});
+      //   // UserModel userModel =
+      //   // UserModel(fcmtoken: authResult.user!.getIdToken());
+      // }
+    } catch (e) {
+      const GetSnackBar(
+        title: 'Login Failed',
+        message: 'Google login failed, try again.',
+      );
+      return false;
     }
-    return true;
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<bool> registerUser(String email, String password, String role) async {
+    // Show progress dialog
+    showCommonProcessingDialog(message: 'Processing Your Request');
+    var headers = {
+      'x-api-key':
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJzZXJ2ZXIiOnsiaWQiOiIzZTRmYzI5NiIsImxvYyI6ImV1dy0yIn0sImlhdCI6MTY3MTU0MDE3MywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmNvbSJ9.9iwQeBRnALMyZURhZfPTWp0iSUVCDy99hYUd1QWE0_0',
+      'Content-Type': 'application/json'
+    };
+    var body =
+        json.encode({"email": email, "password": password, "role": role});
+
+    var response = await http.post(
+      Uri.parse(baseUrl + createUser),
+      headers: headers,
+      body: body,
+    );
+    debugPrint(response.body);
+    if (response.statusCode == 200) {
+      userModel.value = userModelFromJson(response.body);
+      // Dismiss the progress dialog
+      Get.back();
+      return true;
+    } else {
+      Get.snackbar('Error', response.body,
+          snackPosition: SnackPosition.BOTTOM,
+          maxWidth: 400,
+          backgroundColor: kRedColor);
+      // Dismiss the progress dialog
+      Get.back();
+      return false;
+    }
+  }
+
+  Future<bool> login(String email, String password) async {
+    // Show progress dialog
+    showCommonProcessingDialog(message: 'Processing Your Request');
+
     var bodyPrepare = {
       "email": email,
       "password": password,
     };
     var response = await http.post(Uri.parse(baseUrl + userLogin),
         body: jsonEncode(bodyPrepare));
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200) {
       userModel.value = userModelFromJson(response.body);
       _updateHiveTokeng(
           userModel.value.token.toString(), userModel.value.id.toString());
-      await Get.offAndToNamed('/dashboard');
+      // Dismiss the progress dialog
+      Get.back();
+      return true;
+      // await Get.offAndToNamed('/home-screen');
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      // Dismiss the progress dialog
+      Get.back();
+      return false;
     }
   }
 

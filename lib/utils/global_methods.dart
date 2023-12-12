@@ -49,3 +49,49 @@ showDeleteSnak(String title, String message) {
       snackStyle: SnackStyle.FLOATING,
       shouldIconPulse: true);
 }
+
+Widget verticalSpacer(double height) {
+  return SizedBox(height: height);
+}
+
+Widget horizontalSpacer(double width) {
+  return SizedBox(width: width);
+}
+
+// get height and width of screen using media query
+double getHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height;
+}
+
+double getWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
+
+showCommonProcessingDialog({
+  required String message,
+}) {
+  return Get.dialog(
+    AlertDialog.adaptive(
+      title: const Text(
+        'Processing',
+        textAlign: TextAlign.center,
+        textScaler: TextScaler.noScaling,
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(
+            color: kPrimaryColor,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            textScaler: TextScaler.noScaling,
+          ),
+        ],
+      ),
+    ),
+    barrierDismissible: false,
+  );
+}
