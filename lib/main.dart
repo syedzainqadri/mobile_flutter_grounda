@@ -4,12 +4,15 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_flutter_grounda/app/bindings/all_bindings.dart';
 import 'package:mobile_flutter_grounda/app/controllers/authController/auth_controller.dart';
+import 'package:mobile_flutter_grounda/app/controllers/postController/post_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_change_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_controller.dart';
 import 'package:mobile_flutter_grounda/app/services/navigation_service.dart';
+import 'package:mobile_flutter_grounda/app/views/home_screen/home_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/login_screen/login_screen.dart';
 import 'package:mobile_flutter_grounda/firebase_options.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
+import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
@@ -26,10 +29,20 @@ void main() async {
   Get.put(ThemeController());
   Get.put(ThemeChangeController());
   Get.put(AuthController());
+  Get.put(PostController());
   // Get.put(DashboardController());
   // Get.put(ProjectController());
   setPathUrlStrategy();
+  getUserCredential();
   runApp(MyApp());
+}
+
+getUserCredential() {
+  final Box<dynamic> tokenHiveBox = Hive.box('token');
+  token.value = tokenHiveBox.get('token') ?? '';
+  userId.value = int.parse(tokenHiveBox.get('userId') ?? '0');
+  debugPrint('USER LOGIN TOKEN: ${token.value}');
+  debugPrint('USER LOGIN ID: ${userId.value}');
 }
 
 class MyApp extends StatelessWidget {
@@ -44,9 +57,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: _themeController.themeStateFromHiveSettingBox,
       title: projectName,
-      initialRoute: '/login-screen',
+      initialRoute: userId.value == 0 ? '/login-screen' : '/home-screen',
       getPages: appRoutes(),
-      home: LoginScreen(),
+      // home: userId.value == 0 ? LoginScreen() : HomeScreen(),
     );
   }
 }

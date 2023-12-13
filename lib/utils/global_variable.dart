@@ -3,6 +3,10 @@ import 'package:get/get.dart';
 RxBool show = false.obs;
 RxString pid = ''.obs;
 RxString iconFontFamily = "MaterialIcons".obs;
+var token = ''.obs;
+var userId = 0.obs;
+double width = Get.width;
+double height = Get.height;
 
 // Live api endpoints
 String baseUrl = 'https://server-pwo2qiqgmq-uc.a.run.app';
@@ -25,7 +29,7 @@ String updateCategory = '/category/updateCategory';
 String getAllPost = '/post';
 String createPost = '/post/createPost';
 String updatePostUrl = '/post/updatePost';
-String deletePost = '/post/deletePost/';
+String deletePost = '/post/deletePost';
 String getAmenities = '/amenity/';
 String createAmenities = '/amenity/createAmenity';
 String updateAmenites = '/amenity/updateAmenity';

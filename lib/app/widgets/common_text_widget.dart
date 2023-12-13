@@ -7,6 +7,7 @@ class CommonTextWidget extends StatelessWidget {
   final TextStyle? textTheme;
   final int? maxLines;
 
+
   const CommonTextWidget({
     super.key,
     required this.text,

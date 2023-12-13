@@ -21,6 +21,8 @@ class PostController extends GetxController {
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
+  var isAllLoading = false.obs;
+
   var imageUrl = [].obs;
   var userId = 0.obs;
   late bool _serviceEnabled;
@@ -63,10 +65,10 @@ class PostController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    token.value = tokenHiveBox.get('token');
-    userId.value = int.parse(tokenHiveBox.get('userId'));
+    token.value = tokenHiveBox.get('token') ?? '';
+    userId.value = int.parse(tokenHiveBox.get('userId') ?? '0');
     getAll();
-    getLocation();
+    // getLocation();
     noOfInstallmentController.text = '0';
     monthlyInstallmentController.text = '0';
     bedroomController.text = '0';
@@ -80,7 +82,7 @@ class PostController extends GetxController {
   }
 
   Future<void> getAll() async {
-    isLoading.value = true;
+    isAllLoading.value = true;
     var response = await http.get(
       Uri.parse(baseUrl + getAllPost),
       headers: {
@@ -90,11 +92,11 @@ class PostController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       post.value = postModelFromJson(response.body);
-      isLoading.value = false;
+      isAllLoading.value = false;
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      // Get.snackbar('Error', response.body,
+      //     snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
+      isAllLoading.value = false;
     }
   }
 
@@ -133,14 +135,14 @@ class PostController extends GetxController {
       isPublished.value = singlePost.value.status!;
       posessionReady.value = singlePost.value.readyForPossession!;
       showContactDetials.value = singlePost.value.showContactDetails!;
-      print(singlePost.value.amenitiesNames);
-      print(singlePost.value.amenitiesIconCodes);
+      debugPrint(singlePost.value.amenitiesNames);
+      debugPrint(singlePost.value.amenitiesIconCodes);
       postAmenitiesNames.value = jsonDecode(singlePost.value.amenitiesNames!);
       postAmenitiesCodes.value =
           jsonDecode(singlePost.value.amenitiesIconCodes!);
       propertyNumber.value = singlePost.value.propertyNumber!;
-      print(postAmenitiesNames);
-      print(postAmenitiesCodes);
+      debugPrint(postAmenitiesNames.toString());
+      debugPrint(postAmenitiesCodes.toString());
 
       isLoading.value = false;
     } else {
@@ -399,7 +401,7 @@ class PostController extends GetxController {
       "purpose": purpose
     };
     isLoading.value = true;
-    var response = await http.put(Uri.parse(baseUrl + updatePostUrl),
+    var response = await http.put(Uri.parse(baseUrl + deletePost),
         body: jsonEncode(bodyPrepare),
         headers: {
           "Content-Type": "application/json",

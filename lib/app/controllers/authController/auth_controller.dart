@@ -8,6 +8,7 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_flutter_grounda/app/models/errorModel/error_model.dart';
 import 'package:mobile_flutter_grounda/app/models/userModel/user_model.dart';
 import 'package:mobile_flutter_grounda/app/widgets/common_text_widget.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
@@ -160,12 +161,12 @@ class AuthController extends GetxController {
       Get.back();
       return true;
     } else {
+      // Dismiss the progress dialog
+      Get.back();
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM,
           maxWidth: 400,
           backgroundColor: kRedColor);
-      // Dismiss the progress dialog
-      Get.back();
       return false;
     }
   }
@@ -190,10 +191,9 @@ class AuthController extends GetxController {
       return true;
       // await Get.offAndToNamed('/home-screen');
     } else {
-      Get.snackbar('Error', response.body,
-          snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       // Dismiss the progress dialog
       Get.back();
+      showErrorDialog('Incorrect user and/or password');
       return false;
     }
   }

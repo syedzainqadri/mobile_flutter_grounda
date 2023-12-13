@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_flutter_grounda/app/models/errorModel/error_model.dart';
+import 'package:mobile_flutter_grounda/app/widgets/common_elevated_button.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
 
 showSuccessSnak(String title, String message) {
@@ -93,5 +95,26 @@ showCommonProcessingDialog({
       ),
     ),
     barrierDismissible: false,
+  );
+}
+
+void showErrorDialog(String error) {
+  Get.dialog(
+    AlertDialog.adaptive(
+      title: const Text('Error'),
+      content: Text(error),
+      actions: [
+        CommonElevatedButton(
+          text: 'OK',
+          textColor: Colors.black,
+          buttonColor: kPrimaryColor,
+          width: 80.0,
+          height: 30.0,
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ],
+    ),
   );
 }
