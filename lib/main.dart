@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_flutter_grounda/app/bindings/all_bindings.dart';
 import 'package:mobile_flutter_grounda/app/controllers/authController/auth_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/postController/post_controller.dart';
+import 'package:mobile_flutter_grounda/app/controllers/profileController/profile_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_change_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_controller.dart';
 import 'package:mobile_flutter_grounda/app/services/navigation_service.dart';
@@ -30,6 +31,7 @@ void main() async {
   Get.put(ThemeChangeController());
   Get.put(AuthController());
   Get.put(PostController());
+  Get.put(ProfileController());
   // Get.put(DashboardController());
   // Get.put(ProjectController());
   setPathUrlStrategy();

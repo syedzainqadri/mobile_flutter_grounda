@@ -48,8 +48,8 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    token.value = tokenHiveBox.get('token');
-    id.value = tokenHiveBox.get('userId');
+    token.value = tokenHiveBox.get('token') ?? '';
+    id.value = tokenHiveBox.get('userId') ?? '';
     if (id.value == '') {
     } else {
       getProfile(id.value);
@@ -97,7 +97,7 @@ class ProfileController extends GetxController {
       "contactPersonType": contactPersonType,
       "status": true
     };
-    print(bodyPrepare);
+    debugPrint('$bodyPrepare');
     var response = await http.post(Uri.parse(baseUrl + createProfile),
         body: jsonEncode(bodyPrepare),
         headers: {

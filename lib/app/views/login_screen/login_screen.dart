@@ -109,7 +109,7 @@ class LoginScreen extends GetView<AuthController> {
                         )
                             .then((value) {
                           if (value) {
-                            Get.offAllNamed('/home-screen');
+                            Get.offAllNamed('/post-screen');
                           } else {}
                         });
                       }
