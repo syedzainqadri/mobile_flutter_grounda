@@ -8,7 +8,7 @@ import 'package:mobile_flutter_grounda/app/controllers/postController/post_contr
 import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_change_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_controller.dart';
 import 'package:mobile_flutter_grounda/app/services/navigation_service.dart';
-import 'package:mobile_flutter_grounda/app/views/home_screen/home_screen.dart';
+import 'package:mobile_flutter_grounda/app/views/post_screen/post_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/login_screen/login_screen.dart';
 import 'package:mobile_flutter_grounda/firebase_options.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: _themeController.themeStateFromHiveSettingBox,
       title: projectName,
-      initialRoute: userId.value == 0 ? '/login-screen' : '/home-screen',
+      initialRoute: userId.value == 0 ? '/login-screen' : '/post-screen',
       getPages: appRoutes(),
       // home: userId.value == 0 ? LoginScreen() : HomeScreen(),
     );
