@@ -34,7 +34,8 @@ class ProfileEditScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Edit Profile'),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Colors.white,
+          centerTitle: true,
         ),
         body: Container(
           decoration: const BoxDecoration(

@@ -17,7 +17,7 @@ class AmenitiesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    token.value = tokenHiveBox.get('token');
+    token.value = tokenHiveBox.get('token') ?? '';
     getAll();
     // getAllTest();
   }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_flutter_grounda/app/controllers/profileController/profile_controller.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
+import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({
@@ -25,10 +26,13 @@ class ProfileScreen extends GetView<ProfileController> {
           title: const Text(
             'Profile',
           ),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Colors.white,
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Container(
+            height: height,
+            width: width,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,

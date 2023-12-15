@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mobile_flutter_grounda/app/widgets/common_elevated_button.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -96,16 +97,17 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              ListTile(
-                title: const Text('Logout'),
-                onTap: () async {
-                  // Clear all boxes
-                  await Hive.deleteFromDisk();
+              CommonElevatedButton(
+                  text: 'Logout',
+                  buttonColor: kPrimaryColor,
+                  onPressed: () async {
+                    // Clear all boxes
+                    await Hive.deleteFromDisk();
 
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
+                    // Then close the drawer
+                    Navigator.pop(context);
+                    Get.offAllNamed('/login-screen');
+                  })
             ],
           ),
         ),

@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobile_grounda">
+
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="Grounda"
         android:name="${applicationName}"
@@ -30,5 +32,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+    <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyB2qxvCrPcB5t6LgXVPmCsRgMGTo2fDWnM"/>
     </application>
 </manifest>

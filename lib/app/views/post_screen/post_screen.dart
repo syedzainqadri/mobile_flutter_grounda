@@ -17,9 +17,11 @@ class PostScreen extends GetView<PostController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text('Post'),
-            backgroundColor: kPrimaryColor,
+            backgroundColor: Colors.white,
+            centerTitle: true,
           ),
           drawer: const AppDrawer(),
           body: SingleChildScrollView(

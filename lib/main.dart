@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_flutter_grounda/app/bindings/all_bindings.dart';
+import 'package:mobile_flutter_grounda/app/controllers/amenitiesController/amenities_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/authController/auth_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/postController/post_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/profileController/profile_controller.dart';
@@ -32,6 +33,7 @@ void main() async {
   Get.put(AuthController());
   Get.put(PostController());
   Get.put(ProfileController());
+  Get.put(AmenitiesController());
   // Get.put(DashboardController());
   // Get.put(ProjectController());
   setPathUrlStrategy();
