@@ -17,6 +17,7 @@ class ProductsController extends GetxController {
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
+  var isAllLoading = false.obs;
   var status = false.obs;
   var type = ''.obs;
   var description = ''.obs;
@@ -43,7 +44,7 @@ class ProductsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    token.value = tokenHiveBox.get('token');
+    token.value = tokenHiveBox.get('token') ?? '';
     formFocus = FocusNode();
     titleFocus = FocusNode();
     priceFocus = FocusNode();
@@ -52,7 +53,7 @@ class ProductsController extends GetxController {
   }
 
   Future<void> getAll() async {
-    isLoading.value = true;
+    isAllLoading.value = true;
     var response = await http.get(
       Uri.parse(
         baseUrl + allProduct,
@@ -62,20 +63,20 @@ class ProductsController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       products.value = productsModelFromJson(response.body);
-      isLoading.value = false;
+      isAllLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
-      isLoading.value = false;
+      isAllLoading.value = false;
     }
   }
 
   Future<void> getbyId(int id) async {
     isLoading.value = true;
-    print(id);
+    debugPrint('$id');
     var response = await http.get(
       Uri.parse(
         baseUrl + allProduct + id.toString(),
@@ -85,7 +86,7 @@ class ProductsController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       singleProduct.value = singleProductFromJson(response.body);
       productId.value = singleProduct.value.id!;

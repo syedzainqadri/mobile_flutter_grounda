@@ -27,8 +27,8 @@ class ProductsModel {
 
   int? id;
   String? title;
-  double? price;
-  double? salePrice;
+  String? price;
+  String? salePrice;
   String? productType;
   String? description;
   int? productLifeInDays;

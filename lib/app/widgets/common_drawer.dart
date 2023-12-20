@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_flutter_grounda/app/widgets/common_elevated_button.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
+import 'package:mobile_flutter_grounda/utils/global_methods.dart';
+import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -67,15 +69,15 @@ class _AppDrawerState extends State<AppDrawer> {
               )),
               GestureDetector(
                 onTap: () {
-                  // Get.toNamed('/policy-screen');
+                  Get.toNamed('/product-screen');
                 },
                 child: const ListTile(
                   leading: FaIcon(
-                    FontAwesomeIcons.shieldHalved,
+                    FontAwesomeIcons.productHunt,
                     color: kDarkBgColor,
                   ),
                   title: Text(
-                    'Privacy Policy',
+                    'Products',
                     textScaleFactor: 1.0,
                     style: TextStyle(color: Colors.black),
                   ),
@@ -83,19 +85,33 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               GestureDetector(
                 onTap: () {
-                  // Get.toNamed('/term-screen');
+                  Get.toNamed('/account-screen');
                 },
                 child: const ListTile(
                   leading: FaIcon(
-                    FontAwesomeIcons.fileContract,
+                    FontAwesomeIcons.userLarge,
                     color: kDarkBgColor,
                   ),
                   title: Text(
-                    'Term and Conditions',
+                    'My Account',
                     textScaleFactor: 1.0,
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
+              ),
+              // add size box
+              SizedBox(
+                height: getHeight(context) * 0.4,
+              ),
+              // add divider
+              const Divider(
+                height: 2,
+                thickness: 0.5,
+                color: kDarkBgColor,
+              ),
+              // add size box
+              const SizedBox(
+                height: 15,
               ),
               CommonElevatedButton(
                   text: 'Logout',

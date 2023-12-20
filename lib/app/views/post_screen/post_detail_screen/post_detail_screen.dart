@@ -20,7 +20,7 @@ class PostDetailScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(property.title!),
+          title: const Text('Details'),
           backgroundColor: Colors.white,
           centerTitle: true,
         ),
@@ -118,7 +118,7 @@ class PostDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Container(
-                height: height * 0.25,
+                height: height * 0.27,
                 width: width * 0.6,
                 decoration: BoxDecoration(
                   color: kLightPrimary,

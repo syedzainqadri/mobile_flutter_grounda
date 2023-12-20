@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/instance_manager.dart';
 import 'package:mobile_flutter_grounda/app/controllers/agencyController/agency_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/amenitiesController/amenities_controller.dart';
@@ -12,6 +13,7 @@ import 'package:mobile_flutter_grounda/app/controllers/forumPost/forumPostCommen
 import 'package:mobile_flutter_grounda/app/controllers/forumPost/forumPost_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/menuController/sidebar_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/orderController/order_controller.dart';
+import 'package:mobile_flutter_grounda/app/controllers/packageController/package_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/pageController.dart/page_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/paymentMethodController/paymentMethod_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/postController/post_comment_controller.dart';
@@ -28,9 +30,11 @@ import 'package:mobile_flutter_grounda/app/controllers/wishListController/wishLi
 class AllBindings implements Bindings {
   @override
   void dependencies() {
+    debugPrint('===================> Start AllBindings initialization <================');
     Get.lazyPut(() => ThemeChangeController());
     Get.lazyPut(() => ThemeController());
     Get.lazyPut<SideBarController>(() => SideBarController());
+    Get.lazyPut<PackageController>(() => PackageController());
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
     Get.lazyPut<CategoryCollectionController>(
         () => CategoryCollectionController(),

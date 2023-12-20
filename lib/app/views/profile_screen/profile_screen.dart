@@ -55,7 +55,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                 .profile.value.images ==
                             'images'
                         ? 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'
-                        : controller.profile.value.images!),
+                        : controller.profile.value.images ?? ''),
                   ),
                   const SizedBox(height: 20),
                   Text(
