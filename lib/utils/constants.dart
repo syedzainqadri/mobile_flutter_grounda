@@ -17,6 +17,7 @@ const kFillColor = Colors.white;
 const kLabelColor = Color(0XFF333333);
 // const kFrameColor = Color(0XFFF8F8F8);
 const kCardColor = Color(0xffF7F6F2);
+const kWhite = Color.fromARGB(255, 255, 255, 255);
 const kTextColor = Color.fromARGB(255, 0, 0, 0);
 const kBgColor = Colors.white;
 const kListColor = Colors.white60;

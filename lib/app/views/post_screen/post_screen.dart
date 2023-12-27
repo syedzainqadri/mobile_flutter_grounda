@@ -18,6 +18,13 @@ class PostScreen extends GetView<PostController> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
+          // Add floating action button
+          bottomNavigationBar: CommonElevatedButton(
+            text: 'Create Post',
+            buttonColor: kPrimaryColor,
+            borderRadius: 0,
+            onPressed: () => Get.toNamed('/post/create-screen'),
+          ),
           appBar: AppBar(
             title: const Text('Post'),
             backgroundColor: Colors.white,
@@ -42,7 +49,7 @@ class PostScreen extends GetView<PostController> {
                                 style: TextStyle(color: kPrimaryColor),
                               ))
                             : ListView.builder(
-                                padding: const EdgeInsets.only(bottom: 200),
+                                padding: const EdgeInsets.only(bottom: 300),
                                 scrollDirection: Axis.vertical,
                                 itemCount: controller.post.length,
                                 itemBuilder: (BuildContext context, int index) {

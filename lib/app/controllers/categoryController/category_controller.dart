@@ -10,7 +10,7 @@ import 'package:mobile_flutter_grounda/app/models/categoryModel/category_model.d
 import 'package:mobile_flutter_grounda/utils/global_methods.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
-class CategoryCollectionController extends GetxController {
+class CategoryController extends GetxController {
   var token = ''.obs;
   var category = <CategoryModel>[].obs;
   RxList<String> parentCategory = RxList.empty(growable: true);
