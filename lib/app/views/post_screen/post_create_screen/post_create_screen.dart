@@ -164,7 +164,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                     color: kPrimaryColor),
                               ),
                             );
-                            // await postController.getImage();
+                            await postController.getImage();
                             Navigator.pop(context);
                           },
                           images: postController.imageUrl.isEmpty
@@ -178,7 +178,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                   child: ListView.separated(
                                     separatorBuilder: (context, index) =>
                                         const SizedBox(
-                                      width: 20,
+                                      width: 10,
                                     ),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
@@ -186,17 +186,12 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                     itemBuilder: (context, index) {
                                       return Stack(
                                         children: [
-                                          Container(
-                                            width: width * .1,
-                                            height: height * .14,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             child: Image.network(
                                               postController.imageUrl[index],
-                                              width: width * .1,
+                                              width: width * .2,
                                               height: height * .14,
                                               fit: BoxFit.cover,
                                             ),
@@ -429,7 +424,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                       amenities[index] = !amenities[index];
                                       //TODO: build amenities local lists
                                       if (postController.postID.value != '') {
-                                        print(postController.postID);
+                                        debugPrint('${postController.postID}');
                                         if (amenities[index]) {
                                           postController.postAmenitiesNames
                                               .add(names[index]);
@@ -442,7 +437,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                               .remove(codes[index]);
                                         }
                                       } else {
-                                        print('This is working');
+                                        debugPrint('This is working');
                                         if (amenities[index]) {
                                           postController.selectedAmenitiesNames
                                               .add(names[index]);
@@ -497,8 +492,8 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                   postController.selectedAmenitiesNames);
                               var amenitiesCodeList = jsonEncode(
                                   postController.selectedAmenitiesCodes);
-                              print('Amenities Names Are');
-                              print(amenitiesNameList);
+                              debugPrint('Amenities Names Are');
+                              debugPrint(amenitiesNameList);
                               if (description.isNotEmpty) {
                                 if (postController.imageUrl.isNotEmpty) {
                                   if (subCategorySelectedItemId != 0) {
@@ -520,57 +515,59 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                             Random().nextInt(10000000);
                                         var imageList =
                                             jsonEncode(postController.imageUrl);
-                                        print(postController
+                                        debugPrint(postController
                                             .postTitleController.text);
-                                        print(propertyNumber);
-                                        print(description);
-                                        print(postController.imageUrl.first
+                                        debugPrint('$propertyNumber');
+                                        debugPrint(description);
+                                        debugPrint(postController.imageUrl.first
                                             .toString());
-                                        print(imageList);
-                                        print(postController
+                                        debugPrint(imageList);
+                                        debugPrint(postController
                                             .videoUrlController.text);
-                                        print(description);
-                                        print(postController.longitude.value
+                                        debugPrint(description);
+                                        debugPrint(postController
+                                            .longitude.value
                                             .toString());
-                                        print(postController.latitude.value
+                                        debugPrint(postController.latitude.value
                                             .toString());
-                                        print(postController
+                                        debugPrint(postController
                                             .plotNumberController.text);
-                                        print(postController
+                                        debugPrint(postController
                                             .priceController.text);
-                                        print(
+                                        debugPrint(
                                             postController.cityController.text);
-                                        print(
+                                        debugPrint(
                                             postController.areaController.text);
-                                        print(postController
-                                            .hasInstallments.value);
-                                        print(postController
-                                            .showContactDetials.value);
-                                        print(
+                                        debugPrint(
+                                            '${postController.hasInstallments.value}');
+                                        debugPrint(
+                                            '${postController.showContactDetials.value}');
+                                        debugPrint(
                                             'issue loading advance controller');
-                                        print(postController
+                                        debugPrint(postController
                                             .advanceController.text);
-                                        print(int.parse(postController
-                                            .noOfInstallmentController.text));
-                                        print(postController
+                                        debugPrint(
+                                            '${int.parse(postController.noOfInstallmentController.text)}');
+                                        debugPrint(postController
                                             .monthlyInstallmentController.text);
-                                        print(postController
-                                            .posessionReady.value);
-                                        print(postController
+                                        debugPrint(
+                                            '${postController.posessionReady.value}');
+                                        debugPrint(postController
                                             .propertyAreaUnitValue.value);
-                                        print(
+                                        debugPrint(
                                             postController.purposeValue.value);
-                                        print(postController
+                                        debugPrint(postController
                                             .totalAreaController.text);
-                                        print(postController
+                                        debugPrint(postController
                                             .bedroomController.text);
-                                        print(postController
+                                        debugPrint(postController
                                             .bathroomController.text);
-                                        print(amenitiesCodeList);
-                                        print(amenitiesNameList);
-                                        print(selectedItemId);
-                                        print(subCategorySelectedItemId);
-                                        print(postController
+                                        debugPrint(amenitiesCodeList);
+                                        debugPrint(amenitiesNameList);
+                                        debugPrint('$selectedItemId');
+                                        debugPrint(
+                                            '$subCategorySelectedItemId');
+                                        debugPrint(postController
                                                 .postTitleController.text +
                                             propertyNumber.toString());
                                         await postController.create(
@@ -624,7 +621,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                         );
                                         Navigator.pop(context);
                                         postController.getAll();
-                                        Get.toNamed('/post');
+                                        Get.toNamed('/post-screen');
                                       } else {
                                         showErrorSnak('Amenities are empty',
                                             'Please Select Amenities');
@@ -644,7 +641,8 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                     'Description Can Not be empty');
                               }
                             } else {
-                              print("============= Updating started=======");
+                              debugPrint(
+                                  "============= Updating started=======");
                               var description =
                                   await descriptionController.getText();
 
@@ -652,11 +650,11 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                   jsonEncode(postController.postAmenitiesNames);
                               var amenitiesCodeList =
                                   jsonEncode(postController.postAmenitiesCodes);
-                              print(amenitiesNameList);
+                              debugPrint(amenitiesNameList);
                               if (description.isNotEmpty) {
-                                print(description);
+                                debugPrint(description);
                                 if (postController.imageUrl.isNotEmpty) {
-                                  print(postController.imageUrl);
+                                  debugPrint('${postController.imageUrl}');
                                   // if (postController
                                   //         .selectedAmenitiesNames.isNotEmpty ||
                                   //     postController
@@ -672,7 +670,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                   );
                                   var imageList =
                                       jsonEncode(postController.imageUrl);
-                                  print("============= Updating =======");
+                                  debugPrint("============= Updating =======");
                                   await postController.updatePost(
                                     postController.postID.value,
                                     postController.postTitleController.text,

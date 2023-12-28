@@ -218,7 +218,7 @@ class PostForm extends GetView<ThemeChangeController> {
               // text editor
               //TODO: text editor must not be empty validation please
               SizedBox(
-                height: 250,
+                height: height * 0.4,
                 child: TextEditor(textController: contentController),
               ),
 
@@ -247,7 +247,6 @@ class PostForm extends GetView<ThemeChangeController> {
               Row(
                 children: [
                   SizedBox(
-                    width: width * .1,
                     height: height * .14,
                     child: Padding(
                       padding: const EdgeInsets.only(

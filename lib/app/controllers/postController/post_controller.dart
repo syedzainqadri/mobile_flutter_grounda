@@ -1,12 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:location/location.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_flutter_grounda/app/models/postModel/post_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_flutter_grounda/utils/global_methods.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
+import 'package:path/path.dart' as Path;
+import 'package:geolocator/geolocator.dart';
 
 class PostController extends GetxController {
   late FocusNode formFocus;
@@ -17,7 +22,6 @@ class PostController extends GetxController {
 
   var post = <PostModel>[].obs;
   var singlePost = SinglePostModel().obs;
-  Location location = Location();
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
   var isLoading = false.obs;
@@ -26,8 +30,6 @@ class PostController extends GetxController {
   var imageUrl = [].obs;
   var userId = 0.obs;
   late bool _serviceEnabled;
-  late PermissionStatus _permissionGranted;
-  late LocationData _locationData;
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
   var postID = ''.obs;
@@ -68,7 +70,7 @@ class PostController extends GetxController {
     token.value = tokenHiveBox.get('token') ?? '';
     userId.value = int.parse(tokenHiveBox.get('userId') ?? '0');
     getAll();
-    // getLocation();
+    getLocation();
     noOfInstallmentController.text = '0';
     monthlyInstallmentController.text = '0';
     bedroomController.text = '0';
@@ -221,7 +223,7 @@ class PostController extends GetxController {
       "showContactDetails": showContactDetails,
       "purpose": purpose
     };
-    print(bodyPrepare);
+    debugPrint('$bodyPrepare');
 
     var response = await http.post(Uri.parse(baseUrl + createPost),
         body: jsonEncode(bodyPrepare),
@@ -229,7 +231,7 @@ class PostController extends GetxController {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"
         });
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       // post.value = postModelFromJson(response.body);
       isLoading.value = false;
@@ -418,43 +420,47 @@ class PostController extends GetxController {
   }
 
   Future<void> getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
+    LocationPermission permission;
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    _locationData = await location.getLocation();
-    latitude.value = _locationData.latitude!;
-    longitude.value = _locationData.longitude!;
-    print("latitude = $latitude longitude = $longitude");
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    latitude.value = position.latitude;
+    longitude.value = position.longitude;
+    debugPrint('Latitude: ${latitude.value}, Longitude: ${longitude.value}');
   }
 
-  //MultiImage Picker
-  // getImage() async {
-  //   List<File>? res = await ImagePickerWeb.getMultiImagesAsFile();
-  //   if (res != null) {
-  //     for (var i = 0; i < res.length; i++) {
-  //       String fileName = res[i].name;
-  //       var upload = await FirebaseStorage.instance
-  //           .ref('uploads/post/images/$fileName')
-  //           .putBlob(res[i]);
-  //       final url = upload.ref.getDownloadURL().then((value) {
-  //         imageUrl.add(value);
-  //       });
-  //     }
-  //   }
-  // }
+  // Image Picker
+  getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      String fileName = Path.basename(imageFile.path);
+      var upload = await FirebaseStorage.instance
+          .ref('uploads/post/images/$fileName')
+          .putFile(imageFile);
+      final url = await upload.ref.getDownloadURL();
+      imageUrl.add(url);
+    }
+  }
 
   @override
   void onClose() {

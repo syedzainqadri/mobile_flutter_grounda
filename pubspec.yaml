@@ -66,7 +66,6 @@ dependencies:
   # open_street_map_search_and_pick: ^0.0.16
   permission_handler: ^10.2.0
   geolocator: ^9.0.2
-  image_picker_web: ^3.0.0+1
   icon_picker: ^2.1.0
   html_editor_enhanced: ^2.5.1
   country_state_city_picker: ^1.2.8
@@ -76,6 +75,9 @@ dependencies:
   google_maps: ^6.3.0
   cached_network_image: ^3.3.0
   font_awesome_flutter: ^10.6.0
+  image_picker: ^1.0.5
+  path: ^1.8.3
+  
 
 dev_dependencies:
   flutter_test:
