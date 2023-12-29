@@ -6,8 +6,8 @@ import 'package:country_list_pick/country_list_pick.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
 import 'package:mobile_flutter_grounda/app/controllers/authController/auth_controller.dart';
 import 'package:mobile_flutter_grounda/app/controllers/profileController/profile_controller.dart';
 import 'package:mobile_flutter_grounda/app/widgets/default_button.dart';
@@ -20,10 +20,7 @@ class ProfileEditScreen extends StatelessWidget {
   final AuthController authController = Get.find<AuthController>();
   double height = Get.height;
   double width = Get.width;
-  Location location = Location();
   late bool _serviceEnabled;
-  late PermissionStatus _permissionGranted;
-  late LocationData _locationData;
 
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;
@@ -497,25 +494,30 @@ class ProfileEditScreen extends StatelessWidget {
   }
 
   Future<void> getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
+    LocationPermission permission;
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    _locationData = await location.getLocation();
-    latitude.value = _locationData.latitude!;
-    longitude.value = _locationData.longitude!;
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    latitude.value = position.latitude;
+    longitude.value = position.longitude;
+    debugPrint('Latitude: ${latitude.value}, Longitude: ${longitude.value}');
   }
 
   getImage() async {

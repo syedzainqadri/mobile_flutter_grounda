@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -6,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 import 'package:mobile_flutter_grounda/app/models/agencyModel/agency_model.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
@@ -39,11 +39,9 @@ class CustomerController extends GetxController {
   var state = ''.obs;
   var city = ''.obs;
   late bool _serviceEnabled;
-  late PermissionStatus _permissionGranted;
-  late LocationData _locationData;
+
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
-  Location location = Location();
 
   //Text Field Controllers
 
@@ -296,25 +294,29 @@ class CustomerController extends GetxController {
   }
 
   Future<void> getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
+    LocationPermission permission;
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    _locationData = await location.getLocation();
-    latitude.value = _locationData.latitude!;
-    longitude.value = _locationData.longitude!;
-    print("latitude = $latitude longitude = $longitude");
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    latitude.value = position.latitude;
+    longitude.value = position.longitude;
+    debugPrint('Latitude: ${latitude.value}, Longitude: ${longitude.value}');
   }
 }
