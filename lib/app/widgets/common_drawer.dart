@@ -115,6 +115,22 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/agency-screen');
+                },
+                child: const ListTile(
+                  leading: FaIcon(
+                    FontAwesomeIcons.peopleGroup,
+                    color: kDarkBgColor,
+                  ),
+                  title: Text(
+                    'Agency',
+                    textScaleFactor: 1.0,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
               // add size box
               SizedBox(
                 height: getHeight(context) * 0.3,
