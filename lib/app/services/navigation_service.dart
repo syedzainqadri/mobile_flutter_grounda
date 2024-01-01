@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mobile_flutter_grounda/app/views/my_account_screen/myAccount_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/buy_package_screen/buy_package_screen.dart';
+import 'package:mobile_flutter_grounda/app/views/post_screen/my_post_screen/my_post_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/post_create_screen/post_create_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/post_detail_screen/post_detail_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/post_screen.dart';
@@ -21,6 +22,13 @@ appRoutes() => [
       GetPage(
         name: '/post-screen',
         page: () => const PostScreen(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+
+      GetPage(
+        name: '/post/mypost-screen',
+        page: () => const MyPostScreen(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

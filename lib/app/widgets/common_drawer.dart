@@ -99,9 +99,25 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/post/mypost-screen');
+                },
+                child: const ListTile(
+                  leading: FaIcon(
+                    FontAwesomeIcons.clipboard,
+                    color: kDarkBgColor,
+                  ),
+                  title: Text(
+                    'My Posts',
+                    textScaleFactor: 1.0,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
               // add size box
               SizedBox(
-                height: getHeight(context) * 0.4,
+                height: getHeight(context) * 0.3,
               ),
               // add divider
               const Divider(
