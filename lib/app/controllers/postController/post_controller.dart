@@ -21,6 +21,7 @@ class PostController extends GetxController {
   late FocusNode priceFieldFocus;
 
   var post = <PostModel>[].obs;
+  var singlePostList = <PostModel>[].obs;
   var singlePost = SinglePostModel().obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var token = ''.obs;
@@ -70,6 +71,7 @@ class PostController extends GetxController {
     token.value = tokenHiveBox.get('token') ?? '';
     userId.value = int.parse(tokenHiveBox.get('userId') ?? '0');
     getAll();
+    getPostById(userId.value.toString());
     getLocation();
     noOfInstallmentController.text = '0';
     monthlyInstallmentController.text = '0';
@@ -112,6 +114,7 @@ class PostController extends GetxController {
       },
     );
     if (response.statusCode == 200 && response.body != 'null') {
+      singlePostList.value = postModelFromJson(response.body);
       singlePost.value = singlePostModelFromJson(response.body);
       postTitleController.text = singlePost.value.title!;
       totalAreaController.text = singlePost.value.totalAreaSize!;

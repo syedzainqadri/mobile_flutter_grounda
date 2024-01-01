@@ -190,7 +190,8 @@ class PostScreen extends GetView<PostController> {
                 ),
               ],
             ),
-          )),
+          ),
+          ),
     );
   }
 }

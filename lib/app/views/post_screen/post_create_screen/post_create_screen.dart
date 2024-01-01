@@ -621,7 +621,7 @@ class _CreatePostPageState extends State<PostCreateScreen> {
                                         );
                                         Navigator.pop(context);
                                         postController.getAll();
-                                        Get.toNamed('/post-screen');
+                                        Get.offAllNamed('/post-screen');
                                       } else {
                                         showErrorSnak('Amenities are empty',
                                             'Please Select Amenities');
