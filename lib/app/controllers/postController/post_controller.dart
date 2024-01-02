@@ -107,7 +107,7 @@ class PostController extends GetxController {
   Future<void> getPostById(String id) async {
     isLoading.value = true;
     var response = await http.get(
-      Uri.parse('$baseUrl$getAllPost/$id'),
+      Uri.parse('$baseUrl$getUserPost/$id'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -115,37 +115,37 @@ class PostController extends GetxController {
     );
     if (response.statusCode == 200 && response.body != 'null') {
       singlePostList.value = postModelFromJson(response.body);
-      singlePost.value = singlePostModelFromJson(response.body);
-      postTitleController.text = singlePost.value.title!;
-      totalAreaController.text = singlePost.value.totalAreaSize!;
-      cityController.text = singlePost.value.city!;
-      areaController.text = singlePost.value.area!;
-      plotNumberController.text = singlePost.value.plotNumber!;
-      priceController.text = singlePost.value.price!;
-      videoUrlController.text = singlePost.value.video!;
-      advanceController.text = singlePost.value.advanceAmount!;
-      noOfInstallmentController.text =
-          singlePost.value.noOfInstallments!.toString();
-      monthlyInstallmentController.text = singlePost.value.monthlyInstallments!;
-      bedroomController.text = singlePost.value.bedroooms!.toString();
-      bathroomController.text = singlePost.value.bathroom!.toString();
-      descriptionController.text = singlePost.value.longDescription!;
-      imageUrl.value = jsonDecode(singlePost.value.galleryImages!);
-      purposeValue.value = singlePost.value.purpose!;
-      propertyAreaUnitValue.value = singlePost.value.areaSizeUnit!;
-      postID.value = singlePost.value.id.toString();
-      catID.value = singlePost.value.categoryId!;
-      subCatID.value = singlePost.value.subCategoryId!;
-      hasInstallments.value = singlePost.value.isInstallmentAvailable!;
-      isPublished.value = singlePost.value.status!;
-      posessionReady.value = singlePost.value.readyForPossession!;
-      showContactDetials.value = singlePost.value.showContactDetails!;
-      debugPrint(singlePost.value.amenitiesNames);
-      debugPrint(singlePost.value.amenitiesIconCodes);
-      postAmenitiesNames.value = jsonDecode(singlePost.value.amenitiesNames!);
-      postAmenitiesCodes.value =
-          jsonDecode(singlePost.value.amenitiesIconCodes!);
-      propertyNumber.value = singlePost.value.propertyNumber!;
+      // singlePost.value = singlePostModelFromJson(response.body);
+      // postTitleController.text = singlePost.value.title!;
+      // totalAreaController.text = singlePost.value.totalAreaSize!;
+      // cityController.text = singlePost.value.city!;
+      // areaController.text = singlePost.value.area!;
+      // plotNumberController.text = singlePost.value.plotNumber!;
+      // priceController.text = singlePost.value.price!;
+      // videoUrlController.text = singlePost.value.video!;
+      // advanceController.text = singlePost.value.advanceAmount!;
+      // noOfInstallmentController.text =
+      //     singlePost.value.noOfInstallments!.toString();
+      // monthlyInstallmentController.text = singlePost.value.monthlyInstallments!;
+      // bedroomController.text = singlePost.value.bedroooms!.toString();
+      // bathroomController.text = singlePost.value.bathroom!.toString();
+      // descriptionController.text = singlePost.value.longDescription!;
+      // imageUrl.value = jsonDecode(singlePost.value.galleryImages!);
+      // purposeValue.value = singlePost.value.purpose!;
+      // propertyAreaUnitValue.value = singlePost.value.areaSizeUnit!;
+      // postID.value = singlePost.value.id.toString();
+      // catID.value = singlePost.value.categoryId!;
+      // subCatID.value = singlePost.value.subCategoryId!;
+      // hasInstallments.value = singlePost.value.isInstallmentAvailable!;
+      // isPublished.value = singlePost.value.status!;
+      // posessionReady.value = singlePost.value.readyForPossession!;
+      // showContactDetials.value = singlePost.value.showContactDetails!;
+      // debugPrint(singlePost.value.amenitiesNames);
+      // debugPrint(singlePost.value.amenitiesIconCodes);
+      // postAmenitiesNames.value = jsonDecode(singlePost.value.amenitiesNames!);
+      // postAmenitiesCodes.value =
+      //     jsonDecode(singlePost.value.amenitiesIconCodes!);
+      // propertyNumber.value = singlePost.value.propertyNumber!;
       debugPrint(postAmenitiesNames.toString());
       debugPrint(postAmenitiesCodes.toString());
 
@@ -317,7 +317,7 @@ class PostController extends GetxController {
       "showContactDetails": showContactDetails,
       "purpose": purpose
     };
-    print(bodyPrepare);
+    debugPrint('$bodyPrepare');
 
     var response = await http.put(Uri.parse(baseUrl + updatePostUrl),
         body: jsonEncode(bodyPrepare),
@@ -325,10 +325,11 @@ class PostController extends GetxController {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"
         });
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       // post.value = postModelFromJson(response.body);
-      getAll();
+      // getAll();
+      getPostById(userId.value.toString());
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mobile_flutter_grounda/app/views/agency_screen/agency_screen.dart';
+import 'package:mobile_flutter_grounda/app/views/agency_screen/create_agency_screen/create_agency_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/my_account_screen/myAccount_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/buy_package_screen/buy_package_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/my_post_screen/my_post_screen.dart';
@@ -7,6 +8,7 @@ import 'package:mobile_flutter_grounda/app/views/post_screen/post_create_screen/
 import 'package:mobile_flutter_grounda/app/views/post_screen/post_detail_screen/post_detail_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/post_screen/post_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/login_screen/login_screen.dart';
+import 'package:mobile_flutter_grounda/app/views/post_screen/post_update_screen/post_update_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/product_screen/product_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/profile_screen/profile_edit_screen/profile_edit_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/profile_screen/profile_screen.dart';
@@ -49,8 +51,22 @@ appRoutes() => [
       ),
 
       GetPage(
+        name: '/post/update-screen',
+        page: () => const PostUpdateScreen(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+
+      GetPage(
         name: '/agency-screen',
         page: () => AgencyScreen(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+
+      GetPage(
+        name: '/agency/create-screen',
+        page: () => CreateAgencyScreen(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

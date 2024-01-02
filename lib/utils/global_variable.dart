@@ -30,6 +30,7 @@ String createCategory = '/category/createCategory';
 String deleteCategory = '/category/deleteCategory/';
 String updateCategory = '/category/updateCategory';
 String getAllPost = '/post';
+String getUserPost = '/post/user';
 String createPost = '/post/createPost';
 String updatePostUrl = '/post/updatePost';
 String deletePost = '/post/deletePost';

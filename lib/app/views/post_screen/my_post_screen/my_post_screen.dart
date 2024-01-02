@@ -149,19 +149,38 @@ class MyPostScreen extends GetView<PostController> {
                                                   color: Colors.grey),
                                             ),
                                             const SizedBox(height: 5),
-                                            CommonElevatedButton(
-                                              text: 'Update',
-                                              buttonColor: kPrimaryColor,
-                                              width: 150,
-                                              height: 40,
-                                              elevation: 0.0,
-                                              onPressed: () {
-                                                Get.toNamed(
-                                                    '/post/detail-screen',
-                                                    arguments:
-                                                        controller.post[index]);
-                                              },
-                                            ).paddingOnly(left: 30.0),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                CommonElevatedButton(
+                                                  text: 'Update',
+                                                  buttonColor: kPrimaryColor,
+                                                  width: 100,
+                                                  height: 40,
+                                                  elevation: 0.0,
+                                                  onPressed: () {
+                                                    Get.toNamed(
+                                                        '/post/update-screen',
+                                                        arguments: postModel);
+                                                  },
+                                                ),
+                                                CommonElevatedButton(
+                                                  text: 'Delete',
+                                                  buttonColor: kPrimaryColor,
+                                                  width: 100,
+                                                  height: 40,
+                                                  elevation: 0.0,
+                                                  onPressed: () {
+                                                    // Get.toNamed(
+                                                    //     '/post/create-screen',
+                                                    //     arguments:
+                                                    //         postModel.id);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
