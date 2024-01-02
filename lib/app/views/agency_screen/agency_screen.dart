@@ -53,28 +53,28 @@ class AgencyScreen extends GetView<AgencyController> {
                               children: [
                                 Row(
                                   children: [
-                                    SizedBox(
-                                      width: width * .06,
-                                      child: CircleAvatar(
-                                        backgroundColor: kWhiteColor,
-                                        radius: 30,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: controller.agencies[index]
-                                                      .logoImage !=
-                                                  null
-                                              ? Image.network(controller
-                                                  .agencies[index].logoImage!)
-                                              : SvgPicture.asset(
-                                                  'assets/images/logo.svg',
-                                                  fit: BoxFit.cover,
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
-                                        ),
-                                      ),
-                                    ),
+                                    // SizedBox(
+                                    //   width: width * .06,
+                                    //   child: CircleAvatar(
+                                    //     backgroundColor: kWhiteColor,
+                                    //     radius: 30,
+                                    //     child: ClipRRect(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(30),
+                                    //       child: controller.agencies[index]
+                                    //                   .logoImage !=
+                                    //               null
+                                    //           ? Image.network(controller
+                                    //               .agencies[index].logoImage!)
+                                    //           : SvgPicture.asset(
+                                    //               'assets/images/logo.svg',
+                                    //               fit: BoxFit.cover,
+                                    //               width: 30,
+                                    //               height: 30,
+                                    //             ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
