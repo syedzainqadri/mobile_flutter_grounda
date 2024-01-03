@@ -1,13 +1,10 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mobile_flutter_grounda/app/controllers/agencyController/agency_controller.dart';
-import 'package:mobile_flutter_grounda/app/controllers/themeController/theme_change_controller.dart';
 import 'package:mobile_flutter_grounda/app/widgets/common_elevated_button.dart';
-import 'package:mobile_flutter_grounda/app/widgets/default_button.dart';
-import 'package:mobile_flutter_grounda/app/widgets/text_fields.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
 
 class AgencyScreen extends GetView<AgencyController> {
@@ -38,6 +35,7 @@ class AgencyScreen extends GetView<AgencyController> {
           appBar: AppBar(
             title: const Text('Agencies'),
             centerTitle: true,
+            backgroundColor: Colors.white,
           ),
           body: SizedBox(
             height: height,
@@ -47,7 +45,7 @@ class AgencyScreen extends GetView<AgencyController> {
               itemCount: controller.agencies.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  color: kPrimaryColor,
+                  color: kWhite,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -63,15 +61,8 @@ class AgencyScreen extends GetView<AgencyController> {
                                   child: CircleAvatar(
                                     backgroundColor: kWhiteColor,
                                     radius: 30,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(30),
-                                      child: SvgPicture.asset(
-                                        'assets/images/logo.svg',
-                                        fit: BoxFit.cover,
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                    ),
+                                    backgroundImage: NetworkImage(
+                                        controller.agencies[index].logoImage!),
                                   ),
                                 ),
                                 Padding(
@@ -84,7 +75,7 @@ class AgencyScreen extends GetView<AgencyController> {
                                       Text(
                                         controller.agencies[index].title!,
                                         style: const TextStyle(
-                                          color: kWhiteColor,
+                                          color: kDarkBgColor,
                                         ),
                                       ),
                                       const SizedBox(
@@ -95,7 +86,7 @@ class AgencyScreen extends GetView<AgencyController> {
                                           const Text(
                                             "Status: ",
                                             style: TextStyle(
-                                              color: kWhiteColor,
+                                              color: kDarkBgColor,
                                             ),
                                           ),
                                           controller.agencies[index].status ==
@@ -132,14 +123,14 @@ class AgencyScreen extends GetView<AgencyController> {
                                 IconButton(
                                   onPressed: () async {
                                     //Todo: please add edit function
-                                    Get.toNamed('/agency/create');
+                                    Get.toNamed('/agency/create-screen');
                                     controller.getbyId(
                                       controller.agencies[index].id.toString(),
                                     );
                                   },
                                   icon: SvgPicture.asset(
                                     "assets/icons/edit.svg",
-                                    color: kWhiteColor,
+                                    color: kDarkBgColor,
                                   ),
                                 ),
                                 const SizedBox(
@@ -153,7 +144,7 @@ class AgencyScreen extends GetView<AgencyController> {
                                   },
                                   icon: SvgPicture.asset(
                                     "assets/icons/trash.svg",
-                                    color: kWhiteColor,
+                                    color: kDarkBgColor,
                                   ),
                                 ),
                               ],
@@ -166,7 +157,7 @@ class AgencyScreen extends GetView<AgencyController> {
                 );
               },
             ),
-          ),
+          ).paddingSymmetric(horizontal: 10),
         ),
       ),
     );

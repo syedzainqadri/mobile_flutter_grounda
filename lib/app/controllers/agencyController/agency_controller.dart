@@ -1,13 +1,16 @@
+import 'dart:io';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as Path;
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_flutter_grounda/app/models/agencyModel/agency_model.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
@@ -56,6 +59,7 @@ class AgencyController extends GetxController {
     agencyPhoneFieldFocus = FocusNode();
     agencyPasswordFieldFocus = FocusNode();
     getAll();
+    // getbyId();
     getLocation();
   }
 
@@ -70,6 +74,7 @@ class AgencyController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
+    debugPrint('All Agencies ======================== > ${response.body}');
     if (response.statusCode == 200 && response.body != 'null') {
       agencies.value = agencyModelFromJson(response.body);
       isLoading.value = false;
@@ -92,7 +97,7 @@ class AgencyController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    debugPrint('Agency By ID ======================== > ${response.body}');
     if (response.statusCode == 200 && response.body != 'null') {
       singleAgencies.value = singleAgenciesFromJson(response.body);
       agencyNameController.text = singleAgencies.value.title!;
@@ -170,7 +175,7 @@ class AgencyController extends GetxController {
     }
   }
 
-  Future<void> updateAgency(
+  Future<bool> updateAgency(
     int id,
     String title,
     String companyTitle,
@@ -208,11 +213,13 @@ class AgencyController extends GetxController {
       "mobile": mobile,
       "landLine": landLine,
       "whatsapp": whatsApp,
-      "userID": 1,
+      "userID": userId,
       "featuredImage": featuredImage,
       "logoImage": logoImage,
       "slug": slug,
     };
+    debugPrint(
+        'Agency Body for Update ======================== > $bodyPrepare');
 
     var response = await http.put(
       Uri.parse(
@@ -227,10 +234,12 @@ class AgencyController extends GetxController {
     if (response.statusCode == 200 && response.body != 'null') {
       getAll();
       isLoading.value = false;
+      return true;
     } else {
       Get.snackbar('Error', response.body,
           snackPosition: SnackPosition.BOTTOM, maxWidth: 400);
       isLoading.value = false;
+      return false;
     }
   }
 
@@ -262,16 +271,17 @@ class AgencyController extends GetxController {
     }
   }
 
+  // Image Picker
   getAgencyLogo() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes!;
-      String fileName = result.files.first.name;
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-      // Upload file
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      String fileName = Path.basename(imageFile.path);
       var upload = await FirebaseStorage.instance
           .ref('uploads/agency/logos/$fileName')
-          .putData(fileBytes);
+          .putFile(imageFile);
       final url = upload.ref.getDownloadURL().then((value) {
         logo.value = value;
       });
@@ -279,15 +289,15 @@ class AgencyController extends GetxController {
   }
 
   getAgencyBanner() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes!;
-      String fileName = result.files.first.name;
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-      // Upload file
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      String fileName = Path.basename(imageFile.path);
       var upload = await FirebaseStorage.instance
           .ref('uploads/agency/banners/$fileName')
-          .putData(fileBytes);
+          .putFile(imageFile);
       final url = upload.ref.getDownloadURL().then((value) {
         banner.value = value;
       });
@@ -318,6 +328,7 @@ class AgencyController extends GetxController {
         desiredAccuracy: LocationAccuracy.high);
     latitude.value = position.latitude;
     longitude.value = position.longitude;
-    debugPrint('Latitude: ${latitude.value}, Longitude: ${longitude.value}');
+    debugPrint(
+        'Agency Latitude: ${latitude.value},Agency Longitude: ${longitude.value}');
   }
 }
