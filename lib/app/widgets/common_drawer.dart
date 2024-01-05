@@ -131,9 +131,25 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/project-screen');
+                },
+                child: const ListTile(
+                  leading: FaIcon(
+                    FontAwesomeIcons.listCheck,
+                    color: kDarkBgColor,
+                  ),
+                  title: Text(
+                    'Projects',
+                    textScaleFactor: 1.0,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
               // add size box
               SizedBox(
-                height: getHeight(context) * 0.3,
+                height: getHeight(context) * 0.2,
               ),
               // add divider
               const Divider(

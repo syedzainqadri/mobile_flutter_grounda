@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'dart:convert';
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
@@ -108,7 +106,7 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       singleProject.value = singleProjectModelFromJson(response.body);
       projectID.value = singleProject.value.id!;
@@ -192,8 +190,8 @@ class ProjectController extends GetxController {
       "projectNearByPlacesIcons": projectNearByPlaceCodes
     };
 
-    print("<=== body we are sending ===>");
-    print(bodyPrepare);
+    debugPrint("<=== body we are sending ===>");
+    debugPrint('$bodyPrepare');
 
     var response = await http.post(
       Uri.parse(
@@ -205,7 +203,7 @@ class ProjectController extends GetxController {
         "Authorization": "Bearer $token"
       },
     );
-    print(response.body);
+    debugPrint(response.body);
     if (response.statusCode == 200 && response.body != 'null') {
       // project.addAll(projectsModelFromJson(response.body));
       await getAll();
