@@ -50,7 +50,7 @@ class PackageController extends GetxController {
 
     for (int i = 0; i < checkboxStates2.length; i++) {
       if (checkboxStates2[i]) {
-        price += (i + 1) * 100;
+        price += (i + 1) * 500;
         items += 1;
         ads += i + 1;
       }
@@ -58,7 +58,7 @@ class PackageController extends GetxController {
 
     for (int i = 0; i < checkboxStates3.length; i++) {
       if (checkboxStates3[i]) {
-        price += (i + 1) * 100;
+        price += (i + 1) * 1000;
         items += 1;
         ads += i + 1;
       }

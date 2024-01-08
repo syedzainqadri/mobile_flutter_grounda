@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mobile_flutter_grounda/app/controllers/packageController/package_controller.dart';
@@ -67,14 +65,27 @@ class BuyPackageScreen extends GetView<PackageController> {
                     width: width * .9,
                     height: height * 0.055,
                     onPressed: () {
-                      Get.toNamed(
-                        '/package/payment-screen',
-                        arguments: {
-                          'totalPrice': controller.totalPrice.value,
-                          'totalItems': controller.totalItems.value,
-                          'totalAds': controller.totalAds.value,
-                        },
-                      );
+                      if (controller.totalItems.value == 0 ||
+                          controller.totalAds.value == 0 ||
+                          controller.totalPrice.value == 0.0) {
+                        Get.snackbar(
+                          'Error',
+                          'Please select atleast one package',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: Colors.white,
+                          colorText: Colors.black,
+                        );
+                        return;
+                      } else {
+                        Get.toNamed(
+                          '/package/payment-screen',
+                          arguments: {
+                            'totalPrice': controller.totalPrice.value,
+                            'totalItems': controller.totalItems.value,
+                            'totalAds': controller.totalAds.value,
+                          },
+                        );
+                      }
                     },
                     elevation: 0,
                   ).paddingOnly(bottom: 5)
@@ -268,7 +279,7 @@ class BuyPackageScreen extends GetView<PackageController> {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Rs.${(index + 1) * 100}',
+                                      'Rs.${(index + 1) * 500}',
                                       style: const TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 18,
@@ -368,7 +379,7 @@ class BuyPackageScreen extends GetView<PackageController> {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      'Rs.${(index + 1) * 100}',
+                                      'Rs.${(index + 1) * 1000}',
                                       style: const TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 18,
