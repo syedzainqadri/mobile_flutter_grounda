@@ -13,6 +13,7 @@ import 'package:mobile_flutter_grounda/app/views/post_screen/post_update_screen/
 import 'package:mobile_flutter_grounda/app/views/product_screen/product_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/profile_screen/profile_edit_screen/profile_edit_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/profile_screen/profile_screen.dart';
+import 'package:mobile_flutter_grounda/app/views/project_screen/project_create_screen/project_create_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/project_screen/project_screen.dart';
 import 'package:mobile_flutter_grounda/app/views/signup_screen/signup_screen.dart';
 
@@ -76,6 +77,13 @@ appRoutes() => [
       GetPage(
         name: '/project-screen',
         page: () => const ProjectScreen(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
+      ),
+
+      GetPage(
+        name: '/project/create-screen',
+        page: () => ProjectCreateScreen(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 1000),
       ),

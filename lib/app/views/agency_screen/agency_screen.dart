@@ -21,7 +21,6 @@ class AgencyScreen extends GetView<AgencyController> {
   Widget build(BuildContext context) {
     double width = Get.width;
     double height = Get.height;
-    const bool isMobile = false;
     return Obx(
       () => SafeArea(
         child: Scaffold(

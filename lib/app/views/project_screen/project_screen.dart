@@ -29,140 +29,139 @@ class ProjectScreen extends GetView<ProjectController> {
             backgroundColor: Colors.white,
           ),
           body: SingleChildScrollView(
-            child: const Column(
+            child: Column(
               children: [
-                Text('DATA'),
-                // SizedBox(
-                //   height: height * .9,
-                //   child: ListView.builder(
-                //     scrollDirection: Axis.vertical,
-                //     itemCount: controller.project.length,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return Card(
-                //         color: kWhite,
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: Row(
-                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //             children: [
-                //               Column(
-                //                 children: [
-                //                   Row(
-                //                     children: [
-                //                       SizedBox(
-                //                         width: width * .1,
-                //                         height: height * .1,
-                //                         child: CircleAvatar(
-                //                           backgroundColor: kWhiteColor,
-                //                           radius: 30,
-                //                           backgroundImage: NetworkImage(
-                //                               controller.project[index]
-                //                                   .featuredImage!),
-                //                         ),
-                //                       ),
-                //                       Padding(
-                //                         padding: const EdgeInsets.all(8.0),
-                //                         child: Column(
-                //                           mainAxisAlignment:
-                //                               MainAxisAlignment.start,
-                //                           crossAxisAlignment:
-                //                               CrossAxisAlignment.start,
-                //                           children: [
-                //                             Text(
-                //                               controller.project[index].title!,
-                //                               style: const TextStyle(
-                //                                 color: kDarkCardColor,
-                //                               ),
-                //                             ),
-                //                             const SizedBox(
-                //                               height: 10,
-                //                             ),
-                //                             Row(
-                //                               children: [
-                //                                 const Text(
-                //                                   "Status: ",
-                //                                   style: TextStyle(
-                //                                     color: kDarkCardColor,
-                //                                   ),
-                //                                 ),
-                //                                 controller.project[index]
-                //                                             .status ==
-                //                                         true
-                //                                     ? Text(
-                //                                         "Active",
-                //                                         style: Theme.of(context)
-                //                                             .textTheme
-                //                                             .bodySmall!
-                //                                             .copyWith(
-                //                                                 color: Colors
-                //                                                     .green),
-                //                                       )
-                //                                     : Text(
-                //                                         'UnPublished',
-                //                                         style: Theme.of(context)
-                //                                             .textTheme
-                //                                             .bodySmall!
-                //                                             .copyWith(
-                //                                                 color:
-                //                                                     Colors.red),
-                //                                       ),
-                //                               ],
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ),
-                //                     ],
-                //                   ),
-                //                 ],
-                //               ),
-                //               Column(
-                //                 children: [
-                //                   Row(
-                //                     children: [
-                //                       IconButton(
-                //                         onPressed: () async {
-                //                           await controller.getbyId(
-                //                             controller.project[index].id
-                //                                 .toString(),
-                //                           );
-                //                           Get.toNamed('/project/create');
-                //                         },
-                //                         icon: SvgPicture.asset(
-                //                           "assets/icons/edit.svg",
-                //                           color: kDarkCardColor,
-                //                         ),
-                //                       ),
-                //                       const SizedBox(
-                //                         width: 20,
-                //                       ),
-                //                       IconButton(
-                //                         onPressed: () async {
-                //                           debugPrint('project deleted pressed');
-                //                           debugPrint(controller
-                //                               .project[index].id!
-                //                               .toString());
+                SizedBox(
+                  height: height * .9,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.project.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        color: kWhite,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: width * .1,
+                                        height: height * .1,
+                                        child: CircleAvatar(
+                                          backgroundColor: kWhiteColor,
+                                          radius: 30,
+                                          backgroundImage: NetworkImage(
+                                              controller.project[index]
+                                                  .featuredImage!),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              controller.project[index].title!,
+                                              style: const TextStyle(
+                                                color: kDarkCardColor,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  "Status: ",
+                                                  style: TextStyle(
+                                                    color: kDarkCardColor,
+                                                  ),
+                                                ),
+                                                controller.project[index]
+                                                            .status ==
+                                                        true
+                                                    ? Text(
+                                                        "Active",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .green),
+                                                      )
+                                                    : Text(
+                                                        'UnPublished',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () async {
+                                          await controller.getbyId(
+                                            controller.project[index].id
+                                                .toString(),
+                                          );
+                                          Get.toNamed('/project/create');
+                                        },
+                                        icon: SvgPicture.asset(
+                                          "assets/icons/edit.svg",
+                                          color: kDarkCardColor,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      IconButton(
+                                        onPressed: () async {
+                                          debugPrint('project deleted pressed');
+                                          debugPrint(controller
+                                              .project[index].id!
+                                              .toString());
 
-                //                           await controller.delete(
-                //                             controller.project[index].id!
-                //                                 .toString(),
-                //                           );
-                //                         },
-                //                         icon: SvgPicture.asset(
-                //                           "assets/icons/trash.svg",
-                //                           color: kDarkCardColor,
-                //                         ),
-                //                       ),
-                //                     ],
-                //                   ),
-                //                 ],
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
+                                          await controller.delete(
+                                            controller.project[index].id!
+                                                .toString(),
+                                          );
+                                        },
+                                        icon: SvgPicture.asset(
+                                          "assets/icons/trash.svg",
+                                          color: kDarkCardColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ).paddingSymmetric(horizontal: 10),
           ),

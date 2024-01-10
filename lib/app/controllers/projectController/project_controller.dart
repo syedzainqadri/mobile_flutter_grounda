@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as Path;
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_flutter_grounda/app/models/projectModel/project_model.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
@@ -136,21 +141,21 @@ class ProjectController extends GetxController {
     }
   }
 
-  //MultiImage Picker
-  // getImage() async {
-  //   List<File>? res = await ImagePickerWeb.getMultiImagesAsFile();
-  //   if (res != null) {
-  //     for (var i = 0; i < res.length; i++) {
-  //       String fileName = res[i].name;
-  //       var upload = await FirebaseStorage.instance
-  //           .ref('uploads/project/images/$fileName')
-  //           .putBlob(res[i]);
-  //       final url = upload.ref.getDownloadURL().then((value) {
-  //         imageUrl.add(value);
-  //       });
-  //     }
-  //   }
-  // }
+  // Image Picker
+  getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      String fileName = Path.basename(imageFile.path);
+      var upload = await FirebaseStorage.instance
+          .ref('uploads/project/images/$fileName')
+          .putFile(imageFile);
+      final url = await upload.ref.getDownloadURL();
+      imageUrl.add(url);
+    }
+  }
 
   Future<void> create(
     String title,
