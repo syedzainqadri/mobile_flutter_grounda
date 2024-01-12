@@ -41,6 +41,9 @@ class ProjectCreateScreen extends GetView<ProjectController> {
 
   DeveloperController developerController = Get.find<DeveloperController>();
 
+  // getx argument
+  final int? id = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     double width = Get.width;
@@ -86,7 +89,7 @@ class ProjectCreateScreen extends GetView<ProjectController> {
                       startingPriceController:
                           controller.startingPriceController,
                       endingPriceController: controller.endingPriceController,
-                      htmlEditorController: controller.htmlEditorController,
+                      descriptionController: controller.descriptionController,
 
                       // validations
                       titleFieldSubmitted: (value) {
@@ -173,19 +176,18 @@ class ProjectCreateScreen extends GetView<ProjectController> {
                                 itemBuilder: (context, index) {
                                   return Stack(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: width * .2,
-                                        height: height * .14,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: Image.network(
-                                          controller.imageUrl[index],
-                                          width: width * .1,
-                                          height: height * .14,
-                                          fit: BoxFit.cover,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                          child: Image.network(
+                                            controller.imageUrl[index],
+                                            width: width * .1,
+                                            height: height * .14,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                       Positioned(
@@ -403,7 +405,7 @@ class ProjectCreateScreen extends GetView<ProjectController> {
                               "<======= The Project post is being submited =========>");
 
                           var description =
-                              await controller.htmlEditorController.getText();
+                              controller.descriptionController.text;
                           var imageList = jsonEncode(controller.imageUrl);
                           controller.startingPrice.value =
                               controller.startingPriceController.text;
@@ -457,7 +459,7 @@ class ProjectCreateScreen extends GetView<ProjectController> {
                           debugPrint("============= Updating started=======");
 
                           var description =
-                              await controller.htmlEditorController.getText();
+                              controller.descriptionController.text;
                           var imageList = jsonEncode(controller.imageUrl);
                           controller.startingPrice.value =
                               controller.startingPriceController.text;

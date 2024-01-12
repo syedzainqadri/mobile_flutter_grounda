@@ -34,7 +34,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
       required this.areaController,
       required this.startingPriceController,
       required this.endingPriceController,
-      required this.htmlEditorController,
+      required this.descriptionController,
       required this.walkThroughController,
       required this.images,
       // validation
@@ -108,7 +108,7 @@ class ProjectForm extends GetView<ThemeChangeController> {
   TextEditingController areaController;
   TextEditingController startingPriceController;
   TextEditingController endingPriceController;
-  HtmlEditorController htmlEditorController;
+  TextEditingController descriptionController;
 
   Widget images;
   Widget projectNearByPlaces;
@@ -228,35 +228,13 @@ class ProjectForm extends GetView<ThemeChangeController> {
             SizedBox(
               height: height * 0.015,
             ),
-            // text editor
-            //TODO: text editor must not be empty validation please
-            Container(
-              height: height * .3,
-              decoration: BoxDecoration(
-                color: kBgColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: HtmlEditor(
-                htmlToolbarOptions: const HtmlToolbarOptions(
-                  defaultToolbarButtons: [
-                    FontSettingButtons(),
-                    ColorButtons(),
-                    ListButtons(),
-                  ],
-                  toolbarItemHeight: 30,
-                  toolbarType: ToolbarType.nativeExpandable,
-                ),
-                controller: htmlEditorController, //required
-                htmlEditorOptions: const HtmlEditorOptions(
-                  autoAdjustHeight: true,
-                  androidUseHybridComposition: true,
-                  hint: "Your Description here...",
-                  //initalText: "text content initial, if any",
-                ),
-                otherOptions: const OtherOptions(
-                  height: 350,
-                ),
-              ),
+            DefaultTextField(
+              hintText: "Description",
+              labelText: "Description",
+              isPassword: false,
+              textEditingController: descriptionController,
+              validator: projectTitleValidator,
+              maxLength: 25,
             ),
 
             SizedBox(

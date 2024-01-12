@@ -63,7 +63,6 @@ class ProjectController extends GetxController {
   TextEditingController bathroomController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController walkThroughController = TextEditingController();
-  HtmlEditorController htmlEditorController = HtmlEditorController();
 
   @override
   void onInit() {
@@ -122,17 +121,17 @@ class ProjectController extends GetxController {
       projectLocalityController.text = singleProject.value.locality!;
       startingPriceController.text = singleProject.value.startingPrice!;
       endingPriceController.text = singleProject.value.endingPrice!;
-      htmlEditorController.insertText(singleProject.value.description!);
+      descriptionController.text = singleProject.value.description!;
       walkThroughController.text = singleProject.value.walkthroughThreeD!;
       statusValue.value = singleProject.value.status!;
       imageUrl.value = jsonDecode(singleProject.value.gallery!);
       projectNearByPlaces.value = 1;
-      catID.value = singleProject.value.categoryId!;
-      developerID.value = singleProject.value.developerId!;
+      catID.value = singleProject.value.categoryId ?? 0;
+      developerID.value = singleProject.value.developerId ?? 0;
       selectedProjectNearByPlacesNames.value =
-          jsonDecode(singleProject.value.projectNearByPlaceNames!);
+          jsonDecode(singleProject.value.projectNearByPlaceNames ?? '');
       selectedProjectNearByPlacesCodes.value =
-          jsonDecode(singleProject.value.projectNearByPlaceIcons!);
+          jsonDecode(singleProject.value.projectNearByPlaceIcons ?? '');
       isLoading.value = false;
     } else {
       Get.snackbar('Error', response.body,
@@ -328,7 +327,6 @@ class ProjectController extends GetxController {
     bathroomController.text = '';
     descriptionController.text = '';
     walkThroughController.text = '';
-    htmlEditorController.clear();
     var projectID = 0.obs;
     var developerID = 0.obs;
     var catID = 0.obs;

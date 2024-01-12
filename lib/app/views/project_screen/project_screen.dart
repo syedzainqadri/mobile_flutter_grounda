@@ -124,7 +124,7 @@ class ProjectScreen extends GetView<ProjectController> {
                                             controller.project[index].id
                                                 .toString(),
                                           );
-                                          Get.toNamed('/project/create');
+                                          Get.toNamed('/project/create-screen');
                                         },
                                         icon: SvgPicture.asset(
                                           "assets/icons/edit.svg",
