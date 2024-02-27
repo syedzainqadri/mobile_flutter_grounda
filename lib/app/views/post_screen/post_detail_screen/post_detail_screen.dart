@@ -10,10 +10,30 @@ import 'package:mobile_flutter_grounda/app/widgets/icon_from_api.dart';
 import 'package:mobile_flutter_grounda/utils/constants.dart';
 import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
-class PostDetailScreen extends StatelessWidget {
-  PostDetailScreen({super.key});
+class PostDetailScreen extends StatefulWidget {
+  const PostDetailScreen({super.key});
+
+  @override
+  State<PostDetailScreen> createState() => _PostDetailScreenState();
+}
+
+class _PostDetailScreenState extends State<PostDetailScreen> {
   PostModel property = Get.arguments;
+
   var amenitiesController = Get.put(AmenitiesController());
+
+  @override
+  void initState() {
+    fetchAmenities();
+    super.initState();
+  }
+
+  fetchAmenities() async {
+    amenitiesController.amenitiesDetails.value =
+        await amenitiesController.getAllAmenities();
+    setState(() {});
+    debugPrint('Amenities: ${amenitiesController.amenitiesDetails}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -332,6 +352,17 @@ class PostDetailScreen extends StatelessWidget {
                     color: kDarkBgColor,
                     fontWeight: FontWeight.bold),
               ),
+              // amenitiesController.amenitiesDetails.isEmpty
+              //     ? const Center(
+              //         child: Text(
+              //           'No amenities found',
+              //           style: TextStyle(
+              //               fontSize: 18,
+              //               color: kDarkBgColor,
+              //               fontWeight: FontWeight.bold),
+              //         ),
+              //       )
+              //     :
               Container(
                 height: height * 0.42,
                 width: width * 0.6,
@@ -350,8 +381,10 @@ class PostDetailScreen extends StatelessWidget {
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, mainAxisExtent: 115),
-                  itemCount: amenitiesController.amenities.length,
+                  itemCount: amenitiesController.amenitiesDetails.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final amenities =
+                        amenitiesController.amenitiesDetails[index];
                     return Card(
                       color: kLightPrimary,
                       elevation: 0,
@@ -370,12 +403,10 @@ class PostDetailScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       IconFromApi(
-                                        icon: amenitiesController
-                                            .amenities[index].icon!,
+                                        icon: amenities.icon!,
                                       ),
                                       Text(
-                                        amenitiesController
-                                            .amenities[index].name!,
+                                        amenities.name!,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge,
@@ -391,8 +422,7 @@ class PostDetailScreen extends StatelessWidget {
                                               color: kTextColor,
                                             ),
                                           ),
-                                          amenitiesController
-                                                  .amenities[index].status!
+                                          amenities.status!
                                               ? Text(
                                                   "Active",
                                                   style: Theme.of(context)

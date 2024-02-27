@@ -125,7 +125,7 @@ class LoginScreen extends GetView<AuthController> {
                   onPressed: () {
                     controller.googleSignin().then((value) {
                       if (value) {
-                        Get.offAllNamed('/home-screen');
+                        // Get.offAllNamed('/home-screen');
                       } else {
                         showErrorSnak('Login Failed', 'Login Failed');
                       }

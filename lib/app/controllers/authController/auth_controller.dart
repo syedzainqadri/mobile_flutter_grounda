@@ -184,6 +184,7 @@ class AuthController extends GetxController {
     debugPrint(response.body);
     if (response.statusCode == 200) {
       userModel.value = userModelFromJson(response.body);
+      token.value = userModel.value.token!;
       _updateHiveTokeng(
           userModel.value.token.toString(), userModel.value.id.toString());
       // Dismiss the progress dialog

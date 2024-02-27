@@ -30,18 +30,17 @@ void main() async {
   await Hive.openBox('consts');
 
   Get.put(AuthController());
-  Get.put(ThemeController());
-  Get.put(ThemeChangeController());
-  Get.put(AuthController());
-  Get.put(PostController());
-  Get.put(ProfileController());
-  Get.put(AmenitiesController());
-  Get.put(ProductsController());
-  Get.put(PackageController());
   // Get.put(DashboardController());
   // Get.put(ProjectController());
   setPathUrlStrategy();
   getUserCredential();
+  Get.put(ThemeController());
+  Get.put(ThemeChangeController());
+  // Get.put(PostController());
+  // Get.put(ProfileController());
+  // Get.put(AmenitiesController());
+  // Get.put(ProductsController());
+  // Get.put(PackageController());
   runApp(MyApp());
 }
 

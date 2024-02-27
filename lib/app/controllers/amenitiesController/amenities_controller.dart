@@ -8,6 +8,7 @@ import 'package:mobile_flutter_grounda/utils/global_variable.dart';
 
 class AmenitiesController extends GetxController {
   var amenities = <AmenitiesModel>[].obs;
+  var amenitiesDetails = <AmenitiesModel>[].obs;
   final Box<dynamic> tokenHiveBox = Hive.box('token');
   var selectedItemName = ''.obs;
   var token = ''.obs;
@@ -39,6 +40,28 @@ class AmenitiesController extends GetxController {
       isLoading.value = false;
     } else {
       showErrorSnak('Error', response.body);
+    }
+  }
+
+  Future<List<AmenitiesModel>> getAllAmenities() async {
+    isLoading.value = true;
+    var response = await http.get(
+      Uri.parse(
+        baseUrl + getAmenities,
+      ),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    if (response.statusCode == 200 && response.body != 'null') {
+      amenitiesDetails.value = amenitiesModelFromJson(response.body);
+      selectedItemName.value = amenitiesDetails.first.name!;
+      isLoading.value = false;
+      return amenitiesDetails.value;
+    } else {
+      showErrorSnak('Error', response.body);
+      return [];
     }
   }
 
